@@ -4,6 +4,7 @@ import 'package:newstrack/helpers/data.dart';
 import 'package:newstrack/helpers/news.dart';
 import 'package:newstrack/models/article_model.dart';
 import 'package:newstrack/models/category_modal.dart';
+import 'package:newstrack/views/article_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -95,6 +96,7 @@ class _HomeState extends State<Home> {
                         physics: const ClampingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return BlogTile(
+                            url: articles[index].url,
                             imageUrl: articles[index].urlToImage,
                             title: articles[index].title,
                             description: articles[index].description,
@@ -156,41 +158,51 @@ class CategoryTile extends StatelessWidget {
 class BlogTile extends StatelessWidget {
   const BlogTile(
       {super.key,
+      required this.url,
       required this.imageUrl,
       required this.title,
       required this.description});
 
-  final String imageUrl, title, description;
+  final String imageUrl, title, description, url;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        ClipRRect(
-            borderRadius: BorderRadius.circular(6),
-            child: Image.network(imageUrl)),
-        const SizedBox(
-          height: 8,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => ArticleView(blogUrl: url)));
+      },
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 16),
+        child: Column(
+          children: <Widget>[
+            ClipRRect(
+                borderRadius: BorderRadius.circular(6),
+                child: Image.network(imageUrl)),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 19,
+                color: Colors.black,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(
+              height: 8,
+            ),
+            Text(
+              description,
+              style: const TextStyle(
+                  color: Colors.black87, fontWeight: FontWeight.w400),
+            ),
+            const SizedBox(
+              height: 8,
+            )
+          ],
         ),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 19,
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        Text(
-          description,
-          style: const TextStyle(
-              color: Colors.black87, fontWeight: FontWeight.w400),
-        ),
-        const SizedBox(
-          height: 8,
-        )
-      ],
+      ),
     );
   }
 }
