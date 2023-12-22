@@ -46,7 +46,7 @@ class _ArticleViewState extends State<ArticleView> {
         ),
         actions: <Widget>[
           Opacity(
-            opacity: 1,
+            opacity: 0,
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: const Icon(
@@ -58,7 +58,7 @@ class _ArticleViewState extends State<ArticleView> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Container(
+      body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: WebViewWidget(controller: _controller),

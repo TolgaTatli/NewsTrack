@@ -18,7 +18,6 @@ class _CategoryNewsState extends State<CategoryNews> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getCategoryNews();
   }
@@ -36,17 +35,18 @@ class _CategoryNewsState extends State<CategoryNews> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Row(
+          centerTitle: true,
+          title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 "News",
                 style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 24,
                     letterSpacing: 4),
               ),
-              Text(
+              const Text(
                 "Track",
                 style: TextStyle(
                     color: Color.fromARGB(255, 162, 38, 29),
@@ -54,6 +54,15 @@ class _CategoryNewsState extends State<CategoryNews> {
                     fontSize: 24,
                     letterSpacing: 12),
               ),
+              Opacity(
+                opacity: 0,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: const Icon(
+                    Icons.save,
+                  ),
+                ),
+              )
             ],
           ),
           elevation: 0,
@@ -68,23 +77,44 @@ class _CategoryNewsState extends State<CategoryNews> {
                   strokeWidth: 9,
                 ),
               )
-            : Container(
-                child: Column(
-                  children: [
-                    ListView.builder(
-                        padding: const EdgeInsets.only(top: 12),
-                        itemCount: articles.length,
-                        shrinkWrap: true,
-                        physics: const ClampingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return BlogTile(
-                            url: articles[index].url,
-                            imageUrl: articles[index].urlToImage,
-                            title: articles[index].title,
-                            description: articles[index].description,
-                          );
-                        })
-                  ],
+            : SingleChildScrollView(
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
+                  child: Column(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 8, left: 4),
+                        alignment: Alignment.topLeft,
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.category.toUpperCase(),
+                              style: const TextStyle(
+                                letterSpacing: 1.4,
+                                color: Color.fromARGB(255, 130, 12, 12),
+                                fontSize: 21,
+                                fontWeight: FontWeight.w800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      ListView.builder(
+                          padding: const EdgeInsets.only(top: 12),
+                          itemCount: articles.length,
+                          shrinkWrap: true,
+                          physics: const ClampingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return BlogTile(
+                              url: articles[index].url,
+                              imageUrl: articles[index].urlToImage,
+                              title: articles[index].title,
+                              description: articles[index].description,
+                            );
+                          })
+                    ],
+                  ),
                 ),
               ));
   }

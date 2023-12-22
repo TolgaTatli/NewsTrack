@@ -5,6 +5,7 @@ import 'package:newstrack/helpers/news.dart';
 import 'package:newstrack/models/article_model.dart';
 import 'package:newstrack/models/category_modal.dart';
 import 'package:newstrack/views/article_view.dart';
+import 'package:newstrack/views/category_news.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -117,7 +118,13 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => CategoryNews(
+                    category: categoryName.toString().toLowerCase())));
+      },
       child: Container(
         margin: const EdgeInsets.only(right: 16, top: 10),
         child: Stack(
