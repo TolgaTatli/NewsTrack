@@ -1,4 +1,4 @@
-# newstrack
+# NewsTrack
 
 A new Flutter project.
 
